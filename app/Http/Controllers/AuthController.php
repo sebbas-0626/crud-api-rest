@@ -8,8 +8,9 @@ class AuthController extends Controller
 {
     public function register(Request $request)
     {
-        return response()->json(['
-        "message" => metodo de resgistro ok']);
+        return response()->json([
+            'message' => 'respuesta',
+        ]);
     }
     public function login(Request $request)
     {
