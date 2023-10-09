@@ -31,4 +31,9 @@ class User extends Authenticatable
     protected $hidden = [
         'password'
     ];
+
+    public function tareas()
+    {
+        return $this->hasMany(Tarea::class, 'user_id');
+    }
 }

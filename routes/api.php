@@ -3,6 +3,8 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\TareaController;
+use App\Http\Controllers\UserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -15,12 +17,12 @@ use App\Http\Controllers\AuthController;
 |
 */
 
-// Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-//     return $request->user();
-// });
-
 // Registro de usuario
+Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
+Route::get('unauthorized', function () {
+    return response()->json(null, 401);
+})->name('unauthorized');
 
-// Inicio de sesión de usuario
-// Route::post('login', 'AuthController@login');
+Route::apiResource('tareas', TareaController::class)->middleware('auth:api');
+Route::apiResource('usuarios', UserController::class)->middleware('auth:api');

@@ -4,6 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
+
 return new class extends Migration
 {
     /**
@@ -17,6 +18,7 @@ return new class extends Migration
             $table->id();
             $table->string('titulo'); // Columna de título (cadena de texto)
             $table->text('descripcion'); // Columna de descripción (texto largo)
+            $table->foreignId('user_id')->constrained('users')->onUpdate('cascade')->onDelete('cascade');
             $table->timestamps();
         });
     }

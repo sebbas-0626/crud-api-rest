@@ -14,17 +14,14 @@ class TareaController extends Controller
      */
     public function index()
     {
-        //
-    }
+        // $tareas = Tarea::with([
+        //     'users' => function ($query) {
+        //         $query->select('id', 'name');
+        //     }
+        // ])->paginate(10);
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+        $tareas = Tarea::with('users')->paginate(10);
+        return $tareas;
     }
 
     /**
@@ -35,7 +32,22 @@ class TareaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            //code...
+            $tarea = Tarea::create($request->all());
+            return response()->json([
+                'status' => 'OK',
+                'message' => 'tarea creada',
+                'data' => $tarea
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'ERROR',
+                'message' => 'error',
+                'data' => null,
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 
     /**
@@ -45,17 +57,6 @@ class TareaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show(Tarea $tarea)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  \App\Models\Tarea  $tarea
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Tarea $tarea)
     {
         //
     }
