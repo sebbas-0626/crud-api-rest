@@ -20,9 +20,16 @@ use App\Http\Controllers\UserController;
 // Registro de usuario
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
+
+// Rutas protegidas por autenticación de Sanctum
+Route::middleware('auth:sanctum')->group(function () {
+    Route::apiResource('usuarios', UserController::class);
+});
+Route::apiResource('tareas', TareaController::class);
+
 Route::get('unauthorized', function () {
     return response()->json(null, 401);
 })->name('unauthorized');
 
-Route::apiResource('tareas', TareaController::class)->middleware('auth:api');
-Route::apiResource('usuarios', UserController::class)->middleware('auth:api');
+// Route::apiResource('tareas', TareaController::class)->middleware('auth:api');
+// Route::apiResource('usuarios', UserController::class)->middleware('auth:api');

@@ -33,7 +33,6 @@ class TareaController extends Controller
     public function store(Request $request)
     {
         try {
-            //code...
             $tarea = Tarea::create($request->all());
             return response()->json([
                 'status' => 'OK',
@@ -68,19 +67,56 @@ class TareaController extends Controller
      * @param  \App\Models\Tarea  $tarea
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Tarea $tarea)
-    {
-        //
-    }
+    // public function update(Request $request, Tarea $tarea)
+    // {
+    //     //
+    // }
 
+    public function update(Request $request, $id)
+    {
+        try {
+            $tarea = Tarea::find($id);
+            $tarea->update($request->all());
+
+            return response()->json([
+                'status' => 'OK',
+                'message' => 'Tarea actualizada correctamente'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'ERROR',
+                'message' => 'Error al actualizar la tarea',
+                'error' => $e->getMessage()
+            ]);
+        }
+    }
     /**
      * Remove the specified resource from storage.
      *
      * @param  \App\Models\Tarea  $tarea
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Tarea $tarea)
+    // public function destroy(Tarea $tarea)
+    // {
+    //     //
+    // }
+    public function destroy($id)
     {
-        //
+        try {
+            $tarea = Tarea::find($id);
+
+            $tarea->delete();
+
+            return response()->json([
+                'status' => 'OK',
+                'message' => 'Tarea eliminada correctamente'
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'status' => 'ERROR',
+                'message' => 'Error al eliminar la tarea',
+                'error' => $e->getMessage()
+            ]);
+        }
     }
 }
