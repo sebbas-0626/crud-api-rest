@@ -20,6 +20,7 @@ use App\Http\Controllers\UserController;
 // Registro de usuario
 Route::post('login', [AuthController::class, 'login']);
 Route::post('register', [AuthController::class, 'register']);
+Route::post('/logout', [AuthController::class, 'logout'])->middleware('auth:sanctum');
 
 // Rutas protegidas por autenticación de Sanctum
 Route::middleware('auth:sanctum')->group(function () {
