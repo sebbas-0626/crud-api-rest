@@ -72,7 +72,7 @@ class AuthController extends Controller
         $request->user()->currentAccessToken()->delete();
 
         return response()->json([
-            'message' => 'Logged out successfully'
+            'message' => 'Logged out successfully | Se desconectó exitosamente'
         ]);
     }
 }
