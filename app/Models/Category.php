@@ -12,10 +12,10 @@ class Category extends Model
     protected $fillable = [
         'name',
     ];
+    protected $table = 'category';
 
-    public function tareas(){
+    public function tareas()
+    {
         return $this->belongsToMany(Tarea::class, 'task_categories');
     }
-
-
 }

@@ -9,4 +9,6 @@ class TaskCategory extends Model
 {
     use HasFactory;
 
+        protected $table = 'task_category';
+
 }
