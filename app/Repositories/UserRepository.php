@@ -3,33 +3,52 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
 
 class UserRepository implements Interfaces\UserRepositoryInterface {
 
-    protected $model;
+    protected $user;
 
-    public function __construct(User $model)
+    public function __construct(User $user)
     {
-        $this->model = $model;
+        $this->user = $user;
     }
 
-    public function index($paginate){
-        return $this->model->paginate($paginate);
+    public function registerUser(array $userData)
+    {
+        $userData['password'] = Hash::make($userData['password']);
+        return $this->user->create($userData);
     }
 
-    public function find($id){
-        return $this->model->find($id);
+    public function findUserByEmail(string $email): ?User
+    {
+        return $this->user->where('email', $email)->first();
     }
 
-    public function create($attributes){
-        return $this->model->create($attributes);
+    public function getUserById(int $id): ?User
+    {
+        return $this->user->find($id);
     }
 
-    public function update($model, $attributes){
-        return $model->update($attributes);
+    public function updateUser(int $id, array $newDetails): bool
+    {
+        $user = $this->user->find($id);
+
+        if ($user) {
+            return $user->update($newDetails);
+        }
+
+        return false;
     }
 
-    public function delete($model){
-        return $model->delete();
+    public function deleteUser(int $id): bool
+    {
+        $user = $this->user->find($id);
+
+        if ($user) {
+            return $user->delete();
+        }
+
+        return false;
     }
 }
