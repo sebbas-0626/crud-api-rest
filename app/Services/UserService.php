@@ -2,19 +2,29 @@
 
 namespace App\Services;
 
-use App\Repositories\Interfaces\UserRepositoryInterface;
+use App\Repositories\Interfaces\UserRepositoryInterface as InterfacesUserRepositoryInterface;
+use App\Repositories\UserRepositoryInterface;
 
-class UserService {
+class UserService
+{
+    private $userRepository;
 
-    private $UserRepositoryInterface;
-
-    public function __construct(UserRepositoryInterface $UserRepositoryInterface)
+    public function __construct(InterfacesUserRepositoryInterface $userRepository)
     {
-        $this->UserRepositoryInterface = $UserRepositoryInterface;
+        $this->userRepository = $userRepository;
     }
 
-    // Add your service methods here
+    // Aquí puedes añadir los métodos del servicio que usarán el repositorio
 
-    //interfaces()
+    public function registerUser(array $userData)
+    {
+        return $this->userRepository->registerUser($userData);
+    }
 
+    public function findUserByEmail(string $email)
+    {
+        return $this->userRepository->findUserByEmail($email);
+    }
+
+    // Otros métodos que necesites
 }
