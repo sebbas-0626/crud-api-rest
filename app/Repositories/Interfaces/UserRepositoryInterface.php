@@ -11,4 +11,5 @@ interface UserRepositoryInterface
     public function getUserById(int $id): ?User;
     public function updateUser(int $id, array $newDetails): bool;
     public function deleteUser(int $id): bool;
+
 }
