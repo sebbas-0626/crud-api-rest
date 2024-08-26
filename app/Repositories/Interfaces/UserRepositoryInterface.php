@@ -6,10 +6,13 @@ use App\Models\User;
 
 interface UserRepositoryInterface
 {
-    public function registerUser(array $userData);
-    public function findUserByEmail(string $email): ?User;
-    public function getUserById(int $id): ?User;
-    public function updateUser(int $id, array $newDetails): bool;
-    public function deleteUser(int $id): bool;
+    public function getAllUsers();
 
+    public function getUserById($userId);
+
+    public function createUser(array $userDetails);
+
+    public function updateUser($userId, array $newDetails);
+
+    public function deleteUser($userId);
 }
