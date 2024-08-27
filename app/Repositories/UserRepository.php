@@ -3,10 +3,11 @@
 namespace App\Repositories;
 
 use App\Models\User;
+use App\Repositories\Interfaces\UserRepositoryInterface;
 use Illuminate\Support\Facades\Hash;
 
-class UserRepository implements Interfaces\UserRepositoryInterface {
-
+class UserRepository implements UserRepositoryInterface
+{
     protected $user;
 
     public function __construct(User $user)
@@ -14,41 +15,33 @@ class UserRepository implements Interfaces\UserRepositoryInterface {
         $this->user = $user;
     }
 
-    public function registerUser(array $userData)
+    public function getAllUsers()
     {
-        $userData['password'] = Hash::make($userData['password']);
-        return $this->user->create($userData);
+        return $this->user->all();
     }
 
-    public function findUserByEmail(string $email): ?User
+    public function getUserById($userId)
     {
-        return $this->user->where('email', $email)->first();
+        return $this->user->findOrFail($userId);
     }
 
-    public function getUserById(int $id): ?User
+    public function createUser(array $userDetails)
     {
-        return $this->user->find($id);
+        $userDetails['password'] = bcrypt($userDetails['password']);
+        return $this->user->create($userDetails);
     }
 
-    public function updateUser(int $id, array $newDetails): bool
+    public function updateUser($userId, array $newDetails)
     {
-        $user = $this->user->find($id);
-
-        if ($user) {
-            return $user->update($newDetails);
+        if (isset($newDetails['password'])) {
+            $newDetails['password'] = bcrypt($newDetails['password']);
         }
 
-        return false;
+        return $this->user->whereId($userId)->update($newDetails);
     }
 
-    public function deleteUser(int $id): bool
+    public function deleteUser($userId)
     {
-        $user = $this->user->find($id);
-
-        if ($user) {
-            return $user->delete();
-        }
-
-        return false;
+        return $this->user->destroy($userId);
     }
 }
