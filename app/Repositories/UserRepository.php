@@ -15,6 +15,18 @@ class UserRepository implements UserRepositoryInterface
         $this->user = $user;
     }
 
+    // auth
+    public function create(array $data): User
+    {
+        $data['password'] = Hash::make($data['password']);
+        return User::create($data);
+    }
+
+    public function findByEmail(string $email): ?User
+    {
+        return User::where('email', $email)->first();
+    }
+
     public function getAllUsers()
     {
         return $this->user->all();
