@@ -1,7 +1,7 @@
 <!--
  auth service -->
 
- <?php
+<?php
 
 namespace App\Services;
 
@@ -19,7 +19,7 @@ class AuthService
     {
         $this->userRepository = $userRepository;
     }
-
+    // register
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -42,7 +42,7 @@ class AuthService
             'message' => 'Usuario registrado correctamente'
         ], 201);
     }
-
+    // login user
     public function login(Request $request)
     {
         $validator = Validator::make($request->all(), [
@@ -71,7 +71,7 @@ class AuthService
             'user' => $user
         ]);
     }
-
+    // cerrar cuenta
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
