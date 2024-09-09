@@ -72,6 +72,7 @@ class AuthService
         ]);
     }
     // cerrar cuenta
+
     public function logout(Request $request)
     {
         $request->user()->currentAccessToken()->delete();
