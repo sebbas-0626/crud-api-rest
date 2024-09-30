@@ -13,3 +13,5 @@ interface AuthRepositoryInterface
     public function updateUser(User $user, array $data): bool;
 }
 
+
+
